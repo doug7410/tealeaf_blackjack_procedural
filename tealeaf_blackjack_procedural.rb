@@ -1,9 +1,10 @@
 # PSEUDO CODE FOR A BLACKJACK GAME
 #
 # MAIN GAME PREPARATION
+require 'pry'
 
 player = {name: nil, purse: nil, hand: [], bet: nil}
-
+dealer = {hand: []}
 # ask number of player(s)
 
 print 'Please enter your name => '
@@ -31,10 +32,18 @@ deck.shuffle!
 
 print 'Enter your bet => '
 player[:bet] = gets.chomp.to_i
-player[:purse] -= bet 
+player[:purse] -= player[:bet] 
 
-# deal two cards to player(s)
-# deal two cards to dealer
+# deal one card to player(s)
+player[:hand] << deck.pop
+# deal done card to dealer
+dealer[:hand] << deck.pop
+# deal one card to player(s)
+player[:hand] << deck.pop
+# deal one card to dealer
+dealer[:hand] << deck.pop
+
+binding.pry
 # show first card of dealer
 # if the dealer holds a blackjack it must check the player(s) hand(s) - if the player doesn't have a blackjack to tie with the dealer then the player loses the bet automatically 
 #
