@@ -5,8 +5,16 @@
 # ask player(s) name
 # ask player(s) the amount of the initial purse
 # create deck(s)
+def create_deck
+  faces = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"]
+  suits = ["H", "D", "S", "C"]
+  faces.product(suits)
+end
+deck = create_deck
+
 # shuffle deck
-#
+deck.shuffle!
+
 # WHAT'S THE VALUE OF THE HAND?
 # an Ace can count as either 1 or 11
 # the cards from 2 to 9 are valued at their face value
