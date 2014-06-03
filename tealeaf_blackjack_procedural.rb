@@ -22,10 +22,27 @@ deck = create_deck
 
 deck.shuffle!
 
-# WHAT'S THE VALUE OF THE HAND?
-# an Ace can count as either 1 or 11
-# the cards from 2 to 9 are valued at their face value
-# the 10, Jack, Queen and King are all value at 10
+def value(hand)
+  value = 0
+  aces_value = 0
+
+  hand.each do |card|
+    if card[0].is_a? Integer
+      value += card[0]
+    elsif card[0] == "J" || card[0] == "Q" || card[0] == "K"
+      value += 10
+    elsif card[0] == "A"
+      aces_value += 11
+    end
+  end
+
+  while aces_value + value > 21
+    aces_value -= 11
+    aces_value += 1
+  end
+
+  return value + aces_value
+end
 
 def read_card(card)
   suit = nil
@@ -77,7 +94,6 @@ dealer[:hand] << deck.pop
 
 # show first card of dealer
 puts "Dealer first card is #{read_card(dealer[:hand][0])}"
-binding.pry
 
 # if the dealer holds a blackjack it must check the player(s) hand(s) - if the player doesn't have a blackjack to tie with the dealer then the player loses the bet automatically 
 #
