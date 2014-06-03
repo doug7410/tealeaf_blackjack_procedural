@@ -75,6 +75,13 @@ def read_card(card)
   return "#{face} of #{suit}"
 end
 
+def read_hand(hand)
+  puts "Your cards are:"
+  player[:hand].each do |card| 
+    puts read_card(card)
+  end
+  puts "Your hand's value is #{value(player[:hand])}."
+end
 #
 # TURN PREP
 # ask player(s) to make a bet
