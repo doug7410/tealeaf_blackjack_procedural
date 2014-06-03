@@ -97,7 +97,11 @@ puts "Dealer first card is #{read_card(dealer[:hand][0])}"
 
 # if the dealer holds a blackjack it must check the player(s) hand(s) - if the player doesn't have a blackjack to tie with the dealer then the player loses the bet automatically 
 def blackjack?(hand)
-  value(hand) == 21 && hand.length == 2 ? true :false
+  value(hand) == 21 && hand.length == 2 ? true : false
+end
+
+def bust?(hand)
+  value(hand) > 21 ? true : false
 end
 
 # PLAYER(S) TURN (loop until all players have finished playing)
