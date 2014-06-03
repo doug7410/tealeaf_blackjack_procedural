@@ -2,7 +2,7 @@
 #
 # MAIN GAME PREPARATION
 
-player = {name: nil, purse: nil, hand: []}
+player = {name: nil, purse: nil, hand: [], bet: nil}
 
 # ask number of player(s)
 
@@ -28,6 +28,11 @@ deck.shuffle!
 #
 # TURN PREP
 # ask player(s) to make a bet
+
+print 'Enter your bet => '
+player[:bet] = gets.chomp.to_i
+player[:purse] -= bet 
+
 # deal two cards to player(s)
 # deal two cards to dealer
 # show first card of dealer
