@@ -1,10 +1,17 @@
 # PSEUDO CODE FOR A BLACKJACK GAME
 #
 # MAIN GAME PREPARATION
+
+player = {name: nil, purse: nil, hand: []}
+
 # ask number of player(s)
-# ask player(s) name
-# ask player(s) the amount of the initial purse
-# create deck(s)
+
+print 'Please enter your name => '
+player[:name] = gets.chomp
+
+print 'What is the amount of your initial purse? => '
+player[:purse] = gets.chomp.to_i
+
 def create_deck
   faces = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"]
   suits = ["H", "D", "S", "C"]
@@ -12,7 +19,6 @@ def create_deck
 end
 deck = create_deck
 
-# shuffle deck
 deck.shuffle!
 
 # WHAT'S THE VALUE OF THE HAND?
