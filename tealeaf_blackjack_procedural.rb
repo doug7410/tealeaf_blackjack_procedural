@@ -123,15 +123,22 @@ end
   # if the dealer busts then all plays are paid to remaining players
 #
 # COMPARE HAND VALUES AGAINST DEALER & PAY OUT BETS
-# if a player's hand has blackjack & dealer doesn't then the player is paid 3:2 on his original bet
-player[:hand] = [["A", "C"],[10, "C"]]
-dealer[:hand] = [["Q", "C"],[10, "C"]]
+player[:hand] = [[10, "C"],[10, "C"]]
+dealer[:hand] = [[10, "C"],[10, "C"]]
 
 if blackjack?(player[:hand]) && blackjack?(dealer[:hand]) == false
-  player[:purse] += (player[:bet] * 1.5).to_i
+  player[:purse] += (player[:bet] * 2.5).to_i
   puts "Blackjack! You win #{(player[:bet] * 1.5).to_i}!"
   player[:bet] = 0
+elsif value(player[:hand]) > value(dealer[:hand])
+  player[:purse] += player[:bet] * 2
+  puts "You win #{player[:bet] * 1}!"
+  player[:bet] = 0
+elsif value(player[:hand]) == value(dealer[:hand])
+  player[:purse] += player[:bet]
+  puts "Tie! Receive your #{player[:bet]} bet back!"
+  player[:bet] = 0
+elsif value(player[:hand]) < value(dealer[:hand])
+  puts "You lose #{player[:bet]}!"
+  player[:bet] = 0
 end
-binding.pry
-# if a player's hand is higher than the dealer then the player is paid 1:1 on the his original bet
-# if a player's hand is lower than the dealer then the player loses the bet
