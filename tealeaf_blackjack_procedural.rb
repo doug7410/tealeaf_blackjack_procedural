@@ -77,10 +77,10 @@ end
 
 def read_hand(hand)
   puts "Your cards are:"
-  player[:hand].each do |card| 
+  hand.each do |card| 
     puts read_card(card)
   end
-  puts "Your hand's value is #{value(player[:hand])}."
+  puts "Your hand's value is #{value(hand)}."
 end
 
 print 'Enter your bet => '
