@@ -18,13 +18,10 @@ def create_deck
   suits = ["H", "D", "S", "C"]
   faces.product(suits)
 end
-deck = create_deck
-
-deck.shuffle!
 
 def value(hand)
   value = 0
-  aces_value = 0
+  aces_counter = 0
 
   hand.each do |card|
     if card[0].is_a? Integer
@@ -32,16 +29,17 @@ def value(hand)
     elsif card[0] == "J" || card[0] == "Q" || card[0] == "K"
       value += 10
     elsif card[0] == "A"
-      aces_value += 11
+      value += 11
+      aces_counter += 1
     end
   end
 
-  while aces_value + value > 21
-    aces_value -= 11
-    aces_value += 1
+  while value > 21 && aces_counter > 0
+    value -= 10
+    aces_counter -= 1
   end
 
-  return value + aces_value
+  return value
 end
 
 def read_card(card)
@@ -82,6 +80,9 @@ def read_hand(hand)
   end
   puts "Your hand's value is #{value(hand)}."
 end
+
+deck = create_deck
+deck.shuffle!
 
 print 'Enter your bet => '
 player[:bet] = gets.chomp.to_i
@@ -131,8 +132,6 @@ while value(dealer[:hand]) > 17
   dealer[:hand] << deck.pop
 end
 
-player[:hand] = [["A", "C"],[10, "C"]]
-dealer[:hand] = [[10, "C"],[10, "C"], [2, "C"]]
 
 if bust?(dealer[:hand])
   puts "Dealer busted!"
