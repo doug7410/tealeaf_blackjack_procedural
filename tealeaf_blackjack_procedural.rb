@@ -81,6 +81,18 @@ def read_hand(hand)
   puts "Your hand's value is #{value(hand)}."
 end
 
+def blackjack?(hand)
+  value(hand) == 21 && hand.length == 2 ? true : false
+end
+
+def bust?(hand)
+  value(hand) > 21 ? true : false
+end
+
+def pay(player,bet_multiple)
+  player[:purse] += (player[:bet] * bet_multiple).to_i
+end
+
 deck = create_deck
 deck.shuffle!
 
@@ -95,43 +107,27 @@ dealer[:hand] << deck.pop
 
 puts "Dealer first card is #{read_card(dealer[:hand][0])}."
 
-def blackjack?(hand)
-  value(hand) == 21 && hand.length == 2 ? true : false
-end
-
 if blackjack?(dealer[:hand]) && blackjack?(player[:hand]) == false
   puts "Dealer has blackjack. You lose."
   puts "Dealer's cards are #{read_hand(dealer[:hand])}."
 end
 
-def bust?(hand)
-  value(hand) > 21 ? true : false
-end
+until bust?player[:hand] || player_action == "s"
+  read_hand(player[:hand])
+  print "Actions: (h)it, (s)tay => "# TODO s(u)rrender, (d)ouble-down, s(p)lit
+  player_action = gets.chomp.downcase
 
-# PLAYER(S) TURN (loop until all players have finished playing)
-# figure out value of hand and show to player 
-# player chooses option of play (loop)
-  # hit means dealer delivers next card in deck to player
-    # if player busts (hand value goes over 21) the player loses the bet against the dealer and the dealer discards the player's hand
-  # stay means it's now the turn of the next player or the dealer (last player)
-  # double down means the player doubles the bet & receives one more (final) card - can only happen once in the beginning of the player turn
-# split means that the player splits the hand & adds a matching bet thus playing two hands and not one - in order to split the player must have matching pair of cards
-  # surrender means the player folds the hand (plays no more) and receives half the bet
-#
-# DEALER TURN
-# dealer hits until his hand value is 17 or greater
-  # an ace in the dealer's hand is always counted as 11 if possible without the dealer going over 21
-  # if the dealer busts then all plays are paid to remaining players
-#
-
-def pay(player,bet_multiple)
-  player[:purse] += (player[:bet] * bet_multiple).to_i
+  case player_action
+  when "h"
+    player[:hand] << deck.pop
+  when "s"
+    break
+  end
 end
 
 while value(dealer[:hand]) > 17
   dealer[:hand] << deck.pop
 end
-
 
 if bust?(dealer[:hand])
   puts "Dealer busted!"
