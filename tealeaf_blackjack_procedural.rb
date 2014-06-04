@@ -82,29 +82,25 @@ def read_hand(hand)
   end
   puts "Your hand's value is #{value(player[:hand])}."
 end
-#
-# TURN PREP
-# ask player(s) to make a bet
 
 print 'Enter your bet => '
 player[:bet] = gets.chomp.to_i
 player[:purse] -= player[:bet] 
 
-# deal one card to player(s)
 player[:hand] << deck.pop
-# deal done card to dealer
 dealer[:hand] << deck.pop
-# deal one card to player(s)
 player[:hand] << deck.pop
-# deal one card to dealer
 dealer[:hand] << deck.pop
 
-# show first card of dealer
-puts "Dealer first card is #{read_card(dealer[:hand][0])}"
+puts "Dealer first card is #{read_card(dealer[:hand][0])}."
 
-# if the dealer holds a blackjack it must check the player(s) hand(s) - if the player doesn't have a blackjack to tie with the dealer then the player loses the bet automatically 
 def blackjack?(hand)
   value(hand) == 21 && hand.length == 2 ? true : false
+end
+
+if blackjack?(dealer[:hand]) && blackjack?(player[:hand]) == false
+  puts "Dealer has blackjack. You lose."
+  puts "Dealer's cards are #{read_hand(dealer[:hand])}."
 end
 
 def bust?(hand)
