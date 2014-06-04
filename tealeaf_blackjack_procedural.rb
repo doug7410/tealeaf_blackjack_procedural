@@ -1,7 +1,6 @@
 # PSEUDO CODE FOR A BLACKJACK GAME
 #
 # MAIN GAME PREPARATION
-require 'pry'
 
 player = {name: nil, purse: 200, hand: [], bet: nil}
 dealer = {hand: []}
