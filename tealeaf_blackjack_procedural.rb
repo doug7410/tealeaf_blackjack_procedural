@@ -122,20 +122,28 @@ end
   # an ace in the dealer's hand is always counted as 11 if possible without the dealer going over 21
   # if the dealer busts then all plays are paid to remaining players
 #
-# COMPARE HAND VALUES AGAINST DEALER & PAY OUT BETS
-player[:hand] = [[10, "C"],[10, "C"]]
-dealer[:hand] = [[10, "C"],[10, "C"]]
+while value(dealer[:hand]) > 17
+  dealer[:hand] << deck.pop
+end
+
+if bust?(dealer[:hand])
+  pay(player)
+end
+
+def pay(player,bet_multiple)
+  player[:purse] += (player[:bet] * bet_multiple).to_i
+end
 
 if blackjack?(player[:hand]) && blackjack?(dealer[:hand]) == false
-  player[:purse] += (player[:bet] * 2.5).to_i
+  pay(player, 2.5)
   puts "Blackjack! You win #{(player[:bet] * 1.5).to_i}!"
   player[:bet] = 0
 elsif value(player[:hand]) > value(dealer[:hand])
-  player[:purse] += player[:bet] * 2
+  pay(player, 2)
   puts "You win #{player[:bet] * 1}!"
   player[:bet] = 0
 elsif value(player[:hand]) == value(dealer[:hand])
-  player[:purse] += player[:bet]
+  pay(player, 1)
   puts "Tie! Receive your #{player[:bet]} bet back!"
   player[:bet] = 0
 elsif value(player[:hand]) < value(dealer[:hand])
