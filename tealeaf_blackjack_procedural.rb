@@ -14,7 +14,7 @@ dealer = {hand: []}
 # player[:purse] = gets.chomp.to_i
 
 def create_deck
-  faces = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"]
+  faces = [2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"]
   suits = ["H", "D", "S", "C"]
   faces.product(suits)
 end
