@@ -124,5 +124,14 @@ end
 #
 # COMPARE HAND VALUES AGAINST DEALER & PAY OUT BETS
 # if a player's hand has blackjack & dealer doesn't then the player is paid 3:2 on his original bet
+player[:hand] = [["A", "C"],[10, "C"]]
+dealer[:hand] = [["Q", "C"],[10, "C"]]
+
+if blackjack?(player[:hand]) && blackjack?(dealer[:hand]) == false
+  player[:purse] += (player[:bet] * 1.5).to_i
+  puts "Blackjack! You win #{(player[:bet] * 1.5).to_i}!"
+  player[:bet] = 0
+end
+binding.pry
 # if a player's hand is higher than the dealer then the player is paid 1:1 on the his original bet
 # if a player's hand is lower than the dealer then the player loses the bet
