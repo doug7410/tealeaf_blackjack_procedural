@@ -3,15 +3,15 @@
 # MAIN GAME PREPARATION
 require 'pry'
 
-player = {name: nil, purse: nil, hand: [], bet: nil}
+player = {name: nil, purse: 200, hand: [], bet: nil}
 dealer = {hand: []}
 # ask number of player(s)
 
-print 'Please enter your name => '
-player[:name] = gets.chomp
+# print 'Please enter your name => '
+# player[:name] = gets.chomp
 
-print 'What is the amount of your initial purse? => '
-player[:purse] = gets.chomp.to_i
+# print 'What is the amount of your initial purse? => '
+# player[:purse] = gets.chomp.to_i
 
 def create_deck
   faces = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"]
@@ -74,11 +74,13 @@ def read_card(card)
 end
 
 def read_hand(hand)
-  puts "Your cards are:"
+  puts
+  puts "--HAND--"
   hand.each do |card| 
     puts read_card(card)
   end
-  puts "Your hand's value is #{value(hand)}."
+  puts "HAND VALUE: #{value(hand)}"
+  puts
 end
 
 def blackjack?(hand)
@@ -105,6 +107,7 @@ dealer[:hand] << deck.pop
 player[:hand] << deck.pop
 dealer[:hand] << deck.pop
 
+puts
 puts "Dealer first card is #{read_card(dealer[:hand][0])}."
 
 if blackjack?(dealer[:hand]) && blackjack?(player[:hand]) == false
@@ -112,7 +115,7 @@ if blackjack?(dealer[:hand]) && blackjack?(player[:hand]) == false
   puts "Dealer's cards are #{read_hand(dealer[:hand])}."
 end
 
-until bust?player[:hand] || player_action == "s"
+until bust?player[:hand]
   read_hand(player[:hand])
   print "Actions: (h)it, (s)tay => "# TODO s(u)rrender, (d)ouble-down, s(p)lit
   player_action = gets.chomp.downcase
@@ -126,6 +129,7 @@ until bust?player[:hand] || player_action == "s"
 end
 
 while value(dealer[:hand]) > 17
+  read_hand(dealer[:hand])
   dealer[:hand] << deck.pop
 end
 
